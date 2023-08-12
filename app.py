@@ -22,4 +22,8 @@ def print_metrics():
     # local first
     local_block_num: int = node_info.get_latest_block(local_node_url)
     compare_block_num: int = node_info.get_latest_block(nodes_to_compare)
-    return MetricBuilder.build_prometheus_metric('local_node_behind_block_num', compare_block_num - local_block_num)
+    metrics: list[str] = list()
+    metrics.append(MetricBuilder.build_prometheus_metric('local_node_behind_block_num', compare_block_num - local_block_num))
+    metrics.append(MetricBuilder.build_prometheus_metric('local_node_block_num', local_block_num))
+    return '\n'.join(metrics)
+
